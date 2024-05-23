@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>Profile.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #7a7e85;}
+.s4 { color: #6aab73;}
+.s5 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Profile.java</font>
+</center></td></tr></table>
+<pre><span class="s0">public class </span><span class="s1">Profile </span><span class="s2">{</span>
+    <span class="s3">//Class attributes</span>
+    <span class="s0">private </span><span class="s1">String type</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">String name</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">String password</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">String email</span><span class="s2">;</span>
+
+    <span class="s3">// Constructor</span>
+    <span class="s0">public </span><span class="s1">Profile</span><span class="s2">(</span><span class="s1">String type</span><span class="s2">, </span><span class="s1">String name</span><span class="s2">, </span><span class="s1">String password</span><span class="s2">, </span><span class="s1">String email</span><span class="s2">) {</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">type </span><span class="s2">= </span><span class="s1">type</span><span class="s2">;</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">name </span><span class="s2">= </span><span class="s1">name</span><span class="s2">;</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">password </span><span class="s2">= </span><span class="s1">password</span><span class="s2">;</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">email </span><span class="s2">= </span><span class="s1">email</span><span class="s2">;</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+
+<span class="s3">// Getters and Setters For EditProfile Use Case</span>
+<span class="s0">public </span><span class="s1">String getName</span><span class="s2">() {</span>
+    <span class="s0">return this</span><span class="s2">.</span><span class="s1">name</span><span class="s2">;</span>
+<span class="s2">}</span>
+
+<span class="s0">public void </span><span class="s1">setName</span><span class="s2">(</span><span class="s1">String customerName</span><span class="s2">) {</span>
+    <span class="s0">this</span><span class="s2">.</span><span class="s1">name </span><span class="s2">= </span><span class="s1">name</span><span class="s2">;</span>
+<span class="s2">}</span>
+
+<span class="s0">public </span><span class="s1">String getPassword</span><span class="s2">() {</span>
+    <span class="s0">return this</span><span class="s2">.</span><span class="s1">password</span><span class="s2">;</span>
+<span class="s2">}</span>
+
+<span class="s0">public void </span><span class="s1">setPassword</span><span class="s2">(</span><span class="s1">String password</span><span class="s2">) {</span>
+    <span class="s0">this</span><span class="s2">.</span><span class="s1">password </span><span class="s2">= </span><span class="s1">password</span><span class="s2">;</span>
+<span class="s2">}</span>
+
+<span class="s0">public </span><span class="s1">String getType</span><span class="s2">() {</span>
+    <span class="s0">return this</span><span class="s2">.</span><span class="s1">type</span><span class="s2">;</span>
+<span class="s2">}</span>
+
+<span class="s0">public void </span><span class="s1">setType</span><span class="s2">(</span><span class="s1">String location</span><span class="s2">) {</span>
+    <span class="s0">this</span><span class="s2">.</span><span class="s1">type </span><span class="s2">= </span><span class="s1">type</span><span class="s2">;</span>
+<span class="s2">}</span>
+
+<span class="s0">public </span><span class="s1">String getEmai</span><span class="s2">() {</span>
+    <span class="s0">return this</span><span class="s2">.</span><span class="s1">email</span><span class="s2">;</span>
+<span class="s2">}</span>
+
+<span class="s0">public void </span><span class="s1">setEmail</span><span class="s2">(</span><span class="s1">String email</span><span class="s2">) {</span>
+    <span class="s0">this</span><span class="s2">.</span><span class="s1">email </span><span class="s2">= </span><span class="s1">email</span><span class="s2">;</span>
+<span class="s2">}</span>
+
+<span class="s3">// Method to show the profile</span>
+<span class="s0">public void </span><span class="s1">showProfile</span><span class="s2">() {</span>
+    <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot; Name: &quot; </span><span class="s2">+ </span><span class="s1">getName</span><span class="s2">());</span>
+    <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Password: &quot; </span><span class="s2">+ </span><span class="s1">getPassword</span><span class="s2">());</span>
+    <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Type: &quot; </span><span class="s2">+ </span><span class="s1">getType</span><span class="s2">());</span>
+<span class="s2">}</span>
+
+<span class="s3">//Method to check credentials</span>
+<span class="s0">public boolean </span><span class="s1">checkCredentials</span><span class="s2">(</span><span class="s0">boolean </span><span class="s1">enteredPassword</span><span class="s2">) {</span>
+    <span class="s0">return </span><span class="s1">getPassword</span><span class="s2">().</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">enteredPassword</span><span class="s2">);</span>
+<span class="s2">}</span>
+
+<span class="s3">//Method to change credentials</span>
+<span class="s0">public void </span><span class="s1">changeCredentials</span><span class="s2">(</span><span class="s1">String newPassword</span><span class="s2">) {</span>
+    <span class="s0">try</span><span class="s2">{</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">newPassword</span><span class="s2">.</span><span class="s1">length</span><span class="s2">() &lt; </span><span class="s5">8</span><span class="s2">) {</span>
+            <span class="s0">throw new </span><span class="s1">IllegalArgumentException</span><span class="s2">(</span><span class="s4">&quot;New Password Must be at least &lt;8&gt; characters long!!&quot;</span><span class="s2">);</span>
+        <span class="s2">}</span>
+        <span class="s1">setPassword</span><span class="s2">(</span><span class="s1">newPassword</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Credentials changed successfully.&quot;</span><span class="s2">);</span>
+    <span class="s2">} </span><span class="s0">catch</span><span class="s2">(</span><span class="s1">IllegalArgumentException e</span><span class="s2">) {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Error: &quot; </span><span class="s2">+ </span><span class="s1">e</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">());</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+
+<span class="s2">}</span></pre>
+</body>
+</html>
