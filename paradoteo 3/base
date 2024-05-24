@@ -1,0 +1,7 @@
+create table finished(title varchar(20),description varchar(50),time varchar(10),duration int, organizer varchar(15),people int);
+
+
+create table events(title varchar(20),description varchar(50),time varchar(10),duration int, organizer varchar(15),people int);
+
+
+create table suggestions(title varchar(20),description varchar(50),time varchar(10),duration int, organizer varchar(15),people int,likes int, request int);
