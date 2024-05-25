@@ -40,6 +40,7 @@ public class GetaRoomApp {
         createRequestManagementPanel();
         createViewActivitiesPanel();
         createForumPanel();
+        createAddRoomForm();
     }
 
     private void createMainMenu() {
@@ -130,26 +131,97 @@ public class GetaRoomApp {
         btnBackToMainFromAdmin.addActionListener(e -> cardLayout.show(mainPanel, "mainMenu"));
     }
 
+
+    private void createAddRoomForm() {
+        JPanel addRoomForm = new JPanel();
+        mainPanel.add(addRoomForm, "addRoomForm");
+        addRoomForm.setLayout(null);
+
+        JLabel lblTitle = new JLabel("Προσθήκη Αίθουσας");
+        lblTitle.setFont(new Font("Tahoma", Font.BOLD, 18));
+        lblTitle.setBounds(200, 30, 200, 40);
+        addRoomForm.add(lblTitle);
+
+        JLabel lblName = new JLabel("Όνομα Αίθουσας:");
+        lblName.setBounds(100, 100, 100, 30);
+        addRoomForm.add(lblName);
+
+        JTextField txtName = new JTextField();
+        txtName.setBounds(220, 100, 200, 30);
+        addRoomForm.add(txtName);
+
+        JLabel lblCapacity = new JLabel("Χωρητικότητα:");
+        lblCapacity.setBounds(100, 150, 100, 30);
+        addRoomForm.add(lblCapacity);
+
+        JTextField txtCapacity = new JTextField();
+        txtCapacity.setBounds(220, 150, 200, 30);
+        addRoomForm.add(txtCapacity);
+
+        JLabel lblHours = new JLabel("Διαθέσιμες Ώρες:");
+        lblHours.setBounds(100, 200, 100, 30);
+        addRoomForm.add(lblHours);
+
+        JComboBox<String> comboHours = new JComboBox<>(new String[] {"08:00-10:00", "10:00-12:00", "12:00-14:00"});
+        comboHours.setBounds(220, 200, 200, 30);
+        addRoomForm.add(comboHours);
+
+        JLabel lblSpecialReq = new JLabel("Ειδικές Απαιτήσεις:");
+        lblSpecialReq.setBounds(100, 250, 100, 30);
+        addRoomForm.add(lblSpecialReq);
+
+        JTextField txtSpecialReq = new JTextField();
+        txtSpecialReq.setBounds(220, 250, 200, 30);
+        addRoomForm.add(txtSpecialReq);
+
+        JButton btnSubmit = new JButton("Υποβολή");
+        btnSubmit.setBounds(220, 300, 100, 30);
+        addRoomForm.add(btnSubmit);
+
+        JLabel lblMessage = new JLabel("");
+        lblMessage.setBounds(100, 350, 320, 30);
+        addRoomForm.add(lblMessage);
+
+        btnSubmit.addActionListener(e -> {
+            String name = txtName.getText();
+            String capacity = txtCapacity.getText();
+            String hours = (String) comboHours.getSelectedItem();
+            String specialReq = txtSpecialReq.getText();
+
+            if (name.isEmpty() || capacity.isEmpty() || hours.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "Παρακαλώ συμπληρώστε όλα τα πεδία.", "Σφάλμα", JOptionPane.ERROR_MESSAGE);
+            } else {
+                // Εδώ θα μπει ο κώδικας για την καταχώρηση της αίθουσας στο σύστημα
+                JOptionPane.showMessageDialog(frame, "Η αίθουσα καταχωρήθηκε επιτυχώς!", "Επιτυχία", JOptionPane.INFORMATION_MESSAGE);
+                cardLayout.show(mainPanel, "universityRepMenu");
+            }
+        });
+
+        JButton btnBack = new JButton("Πίσω");
+        btnBack.setBounds(100, 300, 100, 30);
+        addRoomForm.add(btnBack);
+
+        btnBack.addActionListener(e -> cardLayout.show(mainPanel, "universityRepMenu"));
+    }
+
     private void createUniversityRepMenu() {
         JPanel universityRepMenu = new JPanel();
         mainPanel.add(universityRepMenu, "universityRepMenu");
         universityRepMenu.setLayout(null);
 
-        JLabel lblUniversityRepMenu = new JLabel("Μενού Πανεπιστημιακού Υπεύθυνου");
-        lblUniversityRepMenu.setFont(new Font("Tahoma", Font.BOLD, 18));
-        lblUniversityRepMenu.setBounds(150, 30, 300, 40);
-        universityRepMenu.add(lblUniversityRepMenu);
+        JLabel lblTitle = new JLabel("Μενού Πανεπιστημιακού Υπεύθυνου");
+        lblTitle.setFont(new Font("Tahoma", Font.BOLD, 18));
+        lblTitle.setBounds(150, 30, 300, 40);
+        universityRepMenu.add(lblTitle);
 
-        JButton btnManageSpaces = new JButton("Διαχείριση Χώρων");
-        btnManageSpaces.setBounds(200, 100, 200, 40);
-        universityRepMenu.add(btnManageSpaces);
+        JButton btnAddRoom = new JButton("Προσθήκη Αίθουσας");
+        btnAddRoom.setBounds(200, 100, 200, 40);
+        universityRepMenu.add(btnAddRoom);
 
-        JButton btnBackToMainFromUniRep = new JButton("Επιστροφή στο Κεντρικό Μενού");
-        btnBackToMainFromUniRep.setBounds(200, 160, 200, 40);
-        universityRepMenu.add(btnBackToMainFromUniRep);
-
-        btnBackToMainFromUniRep.addActionListener(e -> cardLayout.show(mainPanel, "mainMenu"));
+        btnAddRoom.addActionListener(e -> cardLayout.show(mainPanel, "addRoomForm"));
     }
+
+
 
     private void createActivityForm() {
         JPanel activityForm = new JPanel();
