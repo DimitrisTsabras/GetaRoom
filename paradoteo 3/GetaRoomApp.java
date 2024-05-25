@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.Random;
 
 public class GetaRoomApp {
 
@@ -39,7 +40,6 @@ public class GetaRoomApp {
         createRequestManagementPanel();
         createViewActivitiesPanel();
         createForumPanel();
-        createContentManagementPanel(); // Added content management panel
     }
 
     private void createMainMenu() {
@@ -126,7 +126,6 @@ public class GetaRoomApp {
         btnBackToMainFromAdmin.setBounds(200, 220, 200, 40);
         adminMenu.add(btnBackToMainFromAdmin);
 
-        btnManageContent.addActionListener(e -> cardLayout.show(mainPanel, "contentManagement"));
         btnManageRequests.addActionListener(e -> cardLayout.show(mainPanel, "requestManagement"));
         btnBackToMainFromAdmin.addActionListener(e -> cardLayout.show(mainPanel, "mainMenu"));
     }
@@ -203,29 +202,73 @@ public class GetaRoomApp {
         activityForm.add(btnBackToStudentMenu);
 
         btnSubmitActivity.addActionListener(e -> {
-            // Κώδικας για την υποβολή της δραστηριότητας
-            JOptionPane.showMessageDialog(frame, "Η δραστηριότητα υποβλήθηκε!");
+            String title = txtTitle.getText();
+            String description = txtDescription.getText();
+            String startTime = txtStartTime.getText();
+            String expectedParticipants = txtExpectedParticipants.getText();
+
+            JOptionPane.showMessageDialog(frame, "Η δραστηριότητα '" + title + "' υποβλήθηκε με επιτυχία!");
+            txtTitle.setText("");
+            txtDescription.setText("");
+            txtStartTime.setText("");
+            txtExpectedParticipants.setText("");
+            cardLayout.show(mainPanel, "studentMenu");
         });
 
         btnBackToStudentMenu.addActionListener(e -> cardLayout.show(mainPanel, "studentMenu"));
     }
 
     private void createRequestManagementPanel() {
-        JPanel requestManagement = new JPanel();
-        mainPanel.add(requestManagement, "requestManagement");
-        requestManagement.setLayout(null);
+        JPanel requestManagementPanel = new JPanel();
+        mainPanel.add(requestManagementPanel, "requestManagement");
+        requestManagementPanel.setLayout(null);
 
         JLabel lblRequestManagement = new JLabel("Διαχείριση Αιτημάτων Κράτησης");
         lblRequestManagement.setFont(new Font("Tahoma", Font.BOLD, 18));
         lblRequestManagement.setBounds(150, 30, 300, 40);
-        requestManagement.add(lblRequestManagement);
+        requestManagementPanel.add(lblRequestManagement);
 
-        // Ακολουθεί κώδικας για τη δημιουργία του πίνακα αιτημάτων κράτησης
-        // και κουμπιών έγκρισης/απόρριψης για κάθε αίτημα
+        // Placeholder for request list
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        // Add some example requests
+        listModel.addElement("Αίτημα 1: Κράτηση αίθουσας για μάθημα");
+        listModel.addElement("Αίτημα 2: Κράτηση αίθουσας για εκδήλωση");
+
+        JList<String> requestList = new JList<>(listModel);
+        requestList.setBounds(100, 100, 400, 150);
+        requestManagementPanel.add(requestList);
+
+        JButton btnApproveRequest = new JButton("Έγκριση");
+        btnApproveRequest.setBounds(100, 270, 100, 40);
+        requestManagementPanel.add(btnApproveRequest);
+
+        JButton btnRejectRequest = new JButton("Απόρριψη");
+        btnRejectRequest.setBounds(220, 270, 100, 40);
+        requestManagementPanel.add(btnRejectRequest);
 
         JButton btnBackToAdminMenu = new JButton("Επιστροφή στο Μενού Διαχειριστή");
-        btnBackToAdminMenu.setBounds(200, 300, 200, 40);
-        requestManagement.add(btnBackToAdminMenu);
+        btnBackToAdminMenu.setBounds(340, 270, 200, 40);
+        requestManagementPanel.add(btnBackToAdminMenu);
+
+        btnApproveRequest.addActionListener(e -> {
+            String selectedRequest = requestList.getSelectedValue();
+            if (selectedRequest != null) {
+                listModel.removeElement(selectedRequest);
+                JOptionPane.showMessageDialog(frame, "Το αίτημα '" + selectedRequest + "' εγκρίθηκε.");
+            } else {
+                JOptionPane.showMessageDialog(frame, "Παρακαλώ επιλέξτε ένα αίτημα για έγκριση.");
+            }
+        });
+
+        btnRejectRequest.addActionListener(e -> {
+            String selectedRequest = requestList.getSelectedValue();
+            if (selectedRequest != null) {
+                listModel.removeElement(selectedRequest);
+                JOptionPane.showMessageDialog(frame, "Το αίτημα '" + selectedRequest + "' απορρίφθηκε.");
+            } else {
+                JOptionPane.showMessageDialog(frame, "Παρακαλώ επιλέξτε ένα αίτημα για απόρριψη.");
+            }
+        });
 
         btnBackToAdminMenu.addActionListener(e -> cardLayout.show(mainPanel, "adminMenu"));
     }
@@ -235,16 +278,44 @@ public class GetaRoomApp {
         mainPanel.add(viewActivitiesPanel, "viewActivitiesPanel");
         viewActivitiesPanel.setLayout(null);
 
-        JLabel lblViewActivities = new JLabel("Προβολή Δραστηριοτήτων");
+        JLabel lblViewActivities = new JLabel("Τυχαία Δραστηριότητα");
         lblViewActivities.setFont(new Font("Tahoma", Font.BOLD, 18));
         lblViewActivities.setBounds(200, 30, 200, 40);
         viewActivitiesPanel.add(lblViewActivities);
 
-        // Ακολουθεί κώδικας για την προβολή δραστηριοτήτων
+        JTextArea txtActivityDetails = new JTextArea();
+        txtActivityDetails.setBounds(100, 100, 400, 150);
+        txtActivityDetails.setEditable(false);
+        viewActivitiesPanel.add(txtActivityDetails);
+
+        JButton btnShowRandomActivity = new JButton("Εμφάνιση Τυχαίας Δραστηριότητας");
+        btnShowRandomActivity.setBounds(200, 270, 200, 40);
+        viewActivitiesPanel.add(btnShowRandomActivity);
 
         JButton btnBackToStudentMenu = new JButton("Επιστροφή στο Μενού Φοιτητή");
-        btnBackToStudentMenu.setBounds(200, 300, 200, 40);
+        btnBackToStudentMenu.setBounds(200, 320, 200, 40);
         viewActivitiesPanel.add(btnBackToStudentMenu);
+
+        btnShowRandomActivity.addActionListener(e -> {
+            String[] titles = {"Σκακιστικός Αγώνας", "Σεμινάριο Προγραμματισμού", "Αθλητικός Αγώνας", "Καλλιτεχνικό Εργαστήρι"};
+            String[] descriptions = {
+                    "Ένας συναρπαστικός αγώνας σκακιού μεταξύ κορυφαίων παικτών.",
+                    "Ένα σεμινάριο για τις τελευταίες τάσεις στον προγραμματισμό.",
+                    "Ένας αγώνας μπάσκετ μεταξύ των τμημάτων του πανεπιστημίου.",
+                    "Ένα εργαστήρι τέχνης με έμφαση στη ζωγραφική και τη γλυπτική."
+            };
+            String[] times = {"10:00", "12:00", "15:00", "17:00"};
+
+            Random random = new Random();
+            int index = random.nextInt(titles.length);
+
+            String title = titles[index];
+            String description = descriptions[index];
+            String time = times[index];
+
+            String activityDetails = "Τίτλος: " + title + "\n\nΠεριγραφή: " + description + "\n\nΏρα: " + time;
+            txtActivityDetails.setText(activityDetails);
+        });
 
         btnBackToStudentMenu.addActionListener(e -> cardLayout.show(mainPanel, "studentMenu"));
     }
@@ -252,49 +323,28 @@ public class GetaRoomApp {
     private void createForumPanel() {
         JPanel forumPanel = new JPanel();
         mainPanel.add(forumPanel, "forumPanel");
-        forumPanel.setLayout(null);
+        forumPanel.setLayout(new BorderLayout());
 
-        JLabel lblForum = new JLabel("Forum Επικοινωνίας");
+        JLabel lblForum = new JLabel("Επικοινωνία μέσω του forum");
         lblForum.setFont(new Font("Tahoma", Font.BOLD, 18));
-        lblForum.setBounds(200, 30, 200, 40);
-        forumPanel.add(lblForum);
+        lblForum.setHorizontalAlignment(SwingConstants.CENTER);
+        forumPanel.add(lblForum, BorderLayout.NORTH);
 
-        // Ακολουθεί κώδικας για το forum επικοινωνίας
-
-        JButton btnBackToStudentMenu = new JButton("Επιστροφή στο Μενού Φοιτητή");
-        btnBackToStudentMenu.setBounds(200, 300, 200, 40);
-        forumPanel.add(btnBackToStudentMenu);
-
-        btnBackToStudentMenu.addActionListener(e -> cardLayout.show(mainPanel, "studentMenu"));
-    }
-
-    private void createContentManagementPanel() {
-        JPanel contentManagement = new JPanel();
-        mainPanel.add(contentManagement, "contentManagement");
-        contentManagement.setLayout(null);
-
-        JLabel lblContentManagement = new JLabel("Διαχείριση Περιεχομένου");
-        lblContentManagement.setFont(new Font("Tahoma", Font.BOLD, 18));
-        lblContentManagement.setBounds(200, 30, 200, 40);
-        contentManagement.add(lblContentManagement);
-
-        // Ακολουθεί κώδικας για τη δημιουργία του πίνακα συνομιλιών και των κουμπιών έγκρισης/απόρριψης
-        String[] columnNames = {"Συνομιλία", "Αποδοχή", "Απόρριψη"};
+        String[] columnNames = {"Όνομα Συζήτησης", "Κατηγορία", "Άτομα", "Απαντήσεις", "Τελευταία Απάντηση"};
         Object[][] data = {
-                {"Συνομιλία 1", "Αποδοχή", "Απόρριψη"},
-                {"Συνομιλία 2", "Αποδοχή", "Απόρριψη"},
-                // Προσθέστε και άλλες συνομιλίες εδώ
+                {"Συζήτηση 1", "Γενικά", 10, 5, "20/05/2024"},
+                {"Συζήτηση 2", "Ακαδημαϊκά", 8, 3, "19/05/2024"},
+                {"Συζήτηση 3", "Εκδηλώσεις", 15, 7, "18/05/2024"},
+                {"Συζήτηση 4", "Τεχνολογία", 12, 6, "17/05/2024"},
         };
 
-        JTable table = new JTable(new DefaultTableModel(data, columnNames));
+        JTable table = new JTable(data, columnNames);
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(50, 100, 500, 150);
-        contentManagement.add(scrollPane);
+        forumPanel.add(scrollPane, BorderLayout.CENTER);
 
-        JButton btnBackToAdminMenu = new JButton("Επιστροφή στο Μενού Διαχειριστή");
-        btnBackToAdminMenu.setBounds(200, 300, 200, 40);
-        contentManagement.add(btnBackToAdminMenu);
+        JButton btnBackToStudentMenuFromForum = new JButton("Επιστροφή στο Μενού Φοιτητή");
+        forumPanel.add(btnBackToStudentMenuFromForum, BorderLayout.SOUTH);
 
-        btnBackToAdminMenu.addActionListener(e -> cardLayout.show(mainPanel, "adminMenu"));
+        btnBackToStudentMenuFromForum.addActionListener(e -> cardLayout.show(mainPanel, "studentMenu"));
     }
 }
