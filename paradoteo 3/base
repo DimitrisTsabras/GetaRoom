@@ -21,4 +21,4 @@ create table rooms(name varchar(20), capacity int,special_info varchar(100),depa
 create table room_requests(room varchar(20), event varchar(20));
 create table c_schedule(event varchar(20));
 
-create table support(user varchar(20), request varchar(200));
+create table support(user varchar(20),theme varchar(20), request varchar(200));
