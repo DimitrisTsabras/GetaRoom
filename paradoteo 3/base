@@ -5,3 +5,20 @@ create table events(title varchar(20),description varchar(50),time varchar(10),d
 
 
 create table suggestions(title varchar(20),description varchar(50),time varchar(10),duration int, organizer varchar(15),people int,likes int, request int);
+
+create table group_suggestions(title varchar(20), description varchar(100));
+
+create table join_requests(text varchar(100),user varchar(20), to_group varchar(20));
+
+create table users(id int, type varchar(10),name varchar(30),password varchar(20),email varchar(20),phone varchar(10));
+
+create table groups_table(title varchar(20), description varchar(100),privacy boolean);
+
+insert into users(id,type,name,password,email,phone) values(3,"student","john","pass","mail","2019");
+
+create table rooms(name varchar(20), capacity int,special_info varchar(100),department varchar(30));
+
+create table room_requests(room varchar(20), event varchar(20));
+create table c_schedule(event varchar(20));
+
+create table support(user varchar(20), request varchar(200));
