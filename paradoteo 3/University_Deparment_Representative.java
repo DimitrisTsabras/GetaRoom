@@ -1,25 +1,21 @@
-import java.util.*;
 import java.sql.* ;
 import javax.swing.*;
 /**
- * Γράψτε μια περιγραφή της κλάσης User εδώ.
+ * Γράψτε μια περιγραφή της κλάσης University_Deparment_Representative εδώ.
  * 
  * @author (Το όνομά σας) 
  * @version (Αριθμός έκδοσης ή ημερομηνία εδώ)
  */
-public class User
+public class University_Deparment_Representative extends User
 {
     // μεταβλητές στιγμιοτύπου - αντικαταστήστε το ακόλουθο παράδειγμα
     // με τις δικές σας μεταβλητές
-    
-    int id;
-    Profile profile;
-    List<String> notifications=new ArrayList<String>();
+   String department;
 
     /**
-     * Κατασευαστής αντικειμένων της κλάσης User
+     * Κατασευαστής αντικειμένων της κλάσης University_Deparment_Representative
      */
-    public User()
+    public University_Deparment_Representative()
     {
         // αρχικοποίηση μεταβλητών στιγμιοτύπου
         
@@ -31,7 +27,7 @@ public class User
      * @param  y    παράδειγμα παραμέτρου για την μέθοδο
      * @return        το άθροισμα του x με το y 
      */
-    public void support(String theme, String text)
+    public void addRoom(String room, int capacity, String special_info)
     {
         try
     {
@@ -55,11 +51,11 @@ public class User
 
        // Execute the query
         
-        PreparedStatement stmt = conn.prepareStatement("insert into support(user,theme,request) values(?,?,?)");
-        stmt.setString(1, this.profile.name);
-        stmt.setString(2, theme);
-        stmt.setString(3, text);
-       
+        PreparedStatement stmt = conn.prepareStatement("insert into rooms(name,capacity,special_info,department) values(?,?,?,?)");
+        stmt.setString(1, room);
+        stmt.setInt(2, capacity);
+        stmt.setString(3, special_info);
+        stmt.setString(4, this.department);
        
 
         stmt.executeUpdate();

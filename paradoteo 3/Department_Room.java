@@ -1,28 +1,26 @@
-import java.util.*;
 import java.sql.* ;
 import javax.swing.*;
 /**
- * Γράψτε μια περιγραφή της κλάσης User εδώ.
+ * Γράψτε μια περιγραφή της κλάσης Department_Room εδώ.
  * 
  * @author (Το όνομά σας) 
  * @version (Αριθμός έκδοσης ή ημερομηνία εδώ)
  */
-public class User
+public class Department_Room
 {
     // μεταβλητές στιγμιοτύπου - αντικαταστήστε το ακόλουθο παράδειγμα
     // με τις δικές σας μεταβλητές
-    
-    int id;
-    Profile profile;
-    List<String> notifications=new ArrayList<String>();
+    String name;
+    int capacity;
+    String special_info;
 
     /**
-     * Κατασευαστής αντικειμένων της κλάσης User
+     * Κατασευαστής αντικειμένων της κλάσης Department_Room
      */
-    public User()
+    public Department_Room()
     {
         // αρχικοποίηση μεταβλητών στιγμιοτύπου
-        
+       
     }
 
     /**
@@ -31,9 +29,9 @@ public class User
      * @param  y    παράδειγμα παραμέτρου για την μέθοδο
      * @return        το άθροισμα του x με το y 
      */
-    public void support(String theme, String text)
+    public void book(String event)
     {
-        try
+         try
     {
        // Load the database driver
        Class.forName( "com.mysql.cj.jdbc.Driver" ) ;
@@ -49,22 +47,15 @@ public class User
           System.out.println( "Message: " + warn.getMessage()   ) ;
           System.out.println( "Error  : " + warn.getErrorCode() ) ;
        }
-
-       // Get a statement from the connection
-       ;
-
-       // Execute the query
         
-        PreparedStatement stmt = conn.prepareStatement("insert into support(user,theme,request) values(?,?,?)");
-        stmt.setString(1, this.profile.name);
-        stmt.setString(2, theme);
-        stmt.setString(3, text);
+      
        
        
+       PreparedStatement stmt = conn.prepareStatement("insert into " + this.name +"_schedule(event) values(?) ");
+       stmt.setString(1, event);
+       stmt.executeUpdate();
 
-        stmt.executeUpdate();
-
-       
+       // Loop through the result set
        
        conn.close() ;
    }

@@ -1,75 +1,65 @@
-public class Profile {
-    //Class attributes
-    private String type;
-    private String name;
-    private String password;
-    private String email;
 
-    // Constructor
-    public Profile(String type, String name, String password, String email) {
-        this.type = type;
-        this.name = name;
-        this.password = password;
-        this.email = email;
+/**
+ * Γράψτε μια περιγραφή της κλάσης Profile εδώ.
+ * 
+ * @author (Το όνομά σας) 
+ * @version (Αριθμός έκδοσης ή ημερομηνία εδώ)
+ */
+public class Profile
+{
+    // μεταβλητές στιγμιοτύπου - αντικαταστήστε το ακόλουθο παράδειγμα
+    // με τις δικές σας μεταβλητές
+    String type;
+    String name;
+    String password;
+    String email;
+    String phone;
+
+    /**
+     * Κατασευαστής αντικειμένων της κλάσης Profile
+     */
+    public Profile()
+    {
+        // αρχικοποίηση μεταβλητών στιγμιοτύπου
+       
     }
-}
 
-// Getters and Setters For EditProfile Use Case
-public String getName() {
-    return this.name;
-}
-
-public void setName(String customerName) {
-    this.name = name;
-}
-
-public String getPassword() {
-    return this.password;
-}
-
-public void setPassword(String password) {
-    this.password = password;
-}
-
-public String getType() {
-    return this.type;
-}
-
-public void setType(String location) {
-    this.type = type;
-}
-
-public String getEmai() {
-    return this.email;
-}
-
-public void setEmail(String email) {
-    this.email = email;
-}
-
-// Method to show the profile
-public void showProfile() {
-    System.out.println(" Name: " + getName());
-    System.out.println("Password: " + getPassword());
-    System.out.println("Type: " + getType());
-}
-
-//Method to check credentials
-public boolean checkCredentials(boolean enteredPassword) {
-    return getPassword().equals(enteredPassword);
-}
-
-//Method to change credentials
-public void changeCredentials(String newPassword) {
-    try{
-        if (newPassword.length() < 8) {
-            throw new IllegalArgumentException("New Password Must be at least <8> characters long!!");
-        }
-        setPassword(newPassword);
-        System.out.println("Credentials changed successfully.");
-    } catch(IllegalArgumentException e) {
-        System.out.println("Error: " + e.getMessage());
+    /**
+     * Παράδειγμα μεθόδου - αντικαταστήστε το παρόν σχόλιο με το δικό σας
+     * 
+     * @param  y    παράδειγμα παραμέτρου για την μέθοδο
+     * @return        το άθροισμα του x με το y 
+     */
+    public boolean checkCredentials(int field,String data)
+    {
+        if(field==1){
+        
+         for (char c : data.toCharArray()) {
+      if (Character.isDigit(c)) {
+         return false;
+      }
+   }
+    return true;
+    } 
+    
+    if(field==4){
+        
+         for (char c : data.toCharArray()) {
+      if (!Character.isDigit(c)) {
+         return false;
+      }
+   }
+    return true;
+    } return false;
     }
-}
-
+    
+    
+    public void changeCredentials(int field, String data){
+        if(field==1) 
+        if(checkCredentials(1,data)) this.name=data;
+        if(field==2) this.password=data;
+        if(field==3) this.email=data;
+        if(field==4) 
+        if(checkCredentials(4,data)) this.phone=data;
+    }
 }

@@ -1,25 +1,23 @@
-import java.util.*;
 import java.sql.* ;
 import javax.swing.*;
 /**
- * Γράψτε μια περιγραφή της κλάσης User εδώ.
+ * Γράψτε μια περιγραφή της κλάσης Join_Request εδώ.
  * 
  * @author (Το όνομά σας) 
  * @version (Αριθμός έκδοσης ή ημερομηνία εδώ)
  */
-public class User
+public class Join_Request
 {
     // μεταβλητές στιγμιοτύπου - αντικαταστήστε το ακόλουθο παράδειγμα
     // με τις δικές σας μεταβλητές
-    
-    int id;
-    Profile profile;
-    List<String> notifications=new ArrayList<String>();
+    String text;
+    String user;
+    String group;
 
     /**
-     * Κατασευαστής αντικειμένων της κλάσης User
+     * Κατασευαστής αντικειμένων της κλάσης Join_Request
      */
-    public User()
+    public Join_Request()
     {
         // αρχικοποίηση μεταβλητών στιγμιοτύπου
         
@@ -31,7 +29,7 @@ public class User
      * @param  y    παράδειγμα παραμέτρου για την μέθοδο
      * @return        το άθροισμα του x με το y 
      */
-    public void support(String theme, String text)
+    public void approve()
     {
         try
     {
@@ -49,22 +47,23 @@ public class User
           System.out.println( "Message: " + warn.getMessage()   ) ;
           System.out.println( "Error  : " + warn.getErrorCode() ) ;
        }
-
-       // Get a statement from the connection
-       ;
-
-       // Execute the query
         
-        PreparedStatement stmt = conn.prepareStatement("insert into support(user,theme,request) values(?,?,?)");
-        stmt.setString(1, this.profile.name);
-        stmt.setString(2, theme);
-        stmt.setString(3, text);
+       Group  group = new Group();
+       User user = new User();
        
        
-
-        stmt.executeUpdate();
-
        
+       PreparedStatement stmt = conn.prepareStatement("select * from users where name=? ");
+       stmt.setString(1, this.user);
+       ResultSet result = stmt.executeQuery();
+       result.next();
+       user.id=result.getInt(1);
+       stmt = conn.prepareStatement("select * from groups_table where title=? ");
+       stmt.setString(1, this.group);
+       result = stmt.executeQuery();
+       result.next();
+       group.name=result.getString(1);
+       group.addMember(user.id);
        
        conn.close() ;
    }

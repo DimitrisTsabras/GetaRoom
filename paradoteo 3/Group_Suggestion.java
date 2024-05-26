@@ -1,23 +1,24 @@
 import java.sql.* ;
 import javax.swing.*;
 /**
- * Γράψτε μια περιγραφή της κλάσης Event_Suggestion εδώ.
+ * Γράψτε μια περιγραφή της κλάσης Group_Suggestion εδώ.
  * 
  * @author (Το όνομά σας) 
  * @version (Αριθμός έκδοσης ή ημερομηνία εδώ)
  */
-public class Event_Suggestion extends Event
+public class Group_Suggestion
 {
     // μεταβλητές στιγμιοτύπου - αντικαταστήστε το ακόλουθο παράδειγμα
     // με τις δικές σας μεταβλητές
-    int expected_people;
-    int likes;
-    int request;
+    String name;
+    String description;
+    boolean privacy;
+    
 
     /**
-     * Κατασευαστής αντικειμένων της κλάσης Event_Suggestion
+     * Κατασευαστής αντικειμένων της κλάσης Group_Suggestion
      */
-    public Event_Suggestion()
+    public Group_Suggestion()
     {
         // αρχικοποίηση μεταβλητών στιγμιοτύπου
         
@@ -29,13 +30,65 @@ public class Event_Suggestion extends Event
      * @param  y    παράδειγμα παραμέτρου για την μέθοδο
      * @return        το άθροισμα του x με το y 
      */
-    public int getLikes()
+    public void approve()
     {
-        return this.likes;
+        try
+    {
+       // Load the database driver
+       Class.forName( "com.mysql.cj.jdbc.Driver" ) ;
+
+       // Get a connection to the database
+       Connection conn = DriverManager.getConnection( "jdbc:mysql://localhost/demo?user=root&password=terrorism" ) ;
+
+       // Print all warnings
+       for( SQLWarning warn = conn.getWarnings(); warn != null; warn = warn.getNextWarning() )
+       {
+          System.out.println( "SQL Warning:" ) ;
+          System.out.println( "State  : " + warn.getSQLState()  ) ;
+          System.out.println( "Message: " + warn.getMessage()   ) ;
+          System.out.println( "Error  : " + warn.getErrorCode() ) ;
+       }
+        
+       Group  group = new Group();
+       group.name=this.name;
+       group.description=this.description;
+       group.privacy=this.privacy;
+       
+       group.save();
+       PreparedStatement stmt = conn.prepareStatement("delete from group_suggestions where title=? ");
+       stmt.setString(1, this.name);
+       stmt.executeUpdate();
+
+       // Loop through the result set
+       
+       
+       stmt = conn.prepareStatement("create table " + this.name +"_members(id int) ");
+        
+        stmt.executeUpdate();
+       conn.close() ;
+   }
+   catch( SQLException se )
+   {
+       System.out.println( "SQL Exception:" ) ;
+
+       // Loop through the SQL Exceptions
+       while( se != null )
+       {
+          System.out.println( "State  : " + se.getSQLState()  ) ;
+          System.out.println( "Message: " + se.getMessage()   ) ;
+          System.out.println( "Error  : " + se.getErrorCode() ) ;
+
+          se = se.getNextException() ;
+       }
+   }
+   catch( Exception e )
+   {
+      System.out.println( e ) ;
+   }
         
     }
     
-    public void like(){
+    public void save(){
         try
     {
        // Load the database driver
@@ -57,25 +110,18 @@ public class Event_Suggestion extends Event
        ;
 
        // Execute the query
-        int likes;
-        PreparedStatement stmt = conn.prepareStatement("select  likes from suggestions where title=?");
-        stmt.setString(1, this.title);
+           
+       PreparedStatement stmt = conn.prepareStatement("INSERT INTO group_suggestions(title, description,privacy) VALUES (?,?,?)");
         
-        ResultSet result =stmt.executeQuery();
-        result.next();
-        likes=result.getInt(1);
-        stmt = conn.prepareStatement("update suggestions set likes=?   where title = ?");
-        
-       
-       stmt.setString(2,this.title);
-        stmt.setInt(1,likes+1);
+        stmt.setString(1, this.name);
+        stmt.setString(2, this.description);
+        stmt.setBoolean(3, this.privacy);
         
 
         stmt.executeUpdate();
 
        // Loop through the result set
-       
-
+        
        // Close the result set, statement and the connection
        
        conn.close() ;
@@ -101,7 +147,14 @@ public class Event_Suggestion extends Event
         
     }
     
-    public void approve(){
+    public void makeOpenorPrivate(int op)
+    {
+        if(op==0) this.privacy=false;
+        else this.privacy=true;
+        
+    }
+    
+    public void reject(){
         try
     {
        // Load the database driver
@@ -119,17 +172,9 @@ public class Event_Suggestion extends Event
           System.out.println( "Error  : " + warn.getErrorCode() ) ;
        }
         
-       Approved_Event  event = new Approved_Event();
-       event.title=this.title;
-       event.description=this.description;
-       event.time=this.time;
-       event.duration=this.duration;
-       event.organizer=this.organizer;
-       event.expected_people=this.expected_people;
        
-       event.save();
-       PreparedStatement stmt = conn.prepareStatement("delete from suggestions where title=? ");
-       stmt.setString(1, this.title);
+       PreparedStatement stmt = conn.prepareStatement("delete from group_suggestions where title=? ");
+       stmt.setString(1, this.name);
        stmt.executeUpdate();
 
        // Loop through the result set
@@ -154,73 +199,5 @@ public class Event_Suggestion extends Event
    {
       System.out.println( e ) ;
    }
-        
-        
-    }
-    
-    public void saveEvent(){
-        try
-    {
-       // Load the database driver
-       Class.forName( "com.mysql.cj.jdbc.Driver" ) ;
-
-       // Get a connection to the database
-       Connection conn = DriverManager.getConnection( "jdbc:mysql://localhost/demo?user=root&password=terrorism" ) ;
-
-       // Print all warnings
-       for( SQLWarning warn = conn.getWarnings(); warn != null; warn = warn.getNextWarning() )
-       {
-          System.out.println( "SQL Warning:" ) ;
-          System.out.println( "State  : " + warn.getSQLState()  ) ;
-          System.out.println( "Message: " + warn.getMessage()   ) ;
-          System.out.println( "Error  : " + warn.getErrorCode() ) ;
-       }
-
-       // Get a statement from the connection
-       ;
-
-       // Execute the query
-           
-       PreparedStatement stmt = conn.prepareStatement("INSERT INTO suggestions(title, description,time, duration,organizer,people,likes,request) VALUES (?,?, ?, ?,?,?,?,?)");
-        
-       
-       
-        stmt.setString(1, this.title);
-        stmt.setString(2, this.description);
-        stmt.setString(3, this.time);
-        stmt.setInt(4, this.duration);
-        stmt.setString(5, this.organizer.profile.name);
-        stmt.setInt(6, this.expected_people);
-        stmt.setInt(7, this.likes);
-        stmt.setInt(8, this.request);
-
-        stmt.executeUpdate();
-
-       // Loop through the result set
-       
-
-       // Close the result set, statement and the connection
-       
-       conn.close() ;
-   }
-   catch( SQLException se )
-   {
-       System.out.println( "SQL Exception:" ) ;
-
-       // Loop through the SQL Exceptions
-       while( se != null )
-       {
-          System.out.println( "State  : " + se.getSQLState()  ) ;
-          System.out.println( "Message: " + se.getMessage()   ) ;
-          System.out.println( "Error  : " + se.getErrorCode() ) ;
-
-          se = se.getNextException() ;
-       }
-   }
-   catch( Exception e )
-   {
-      System.out.println( e ) ;
-   }
-        
     }
 }

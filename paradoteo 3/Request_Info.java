@@ -1,20 +1,23 @@
-
+import java.sql.* ;
+import javax.swing.*;
 /**
- * Γράψτε μια περιγραφή της κλάσης Tag εδώ.
+ * Γράψτε μια περιγραφή της κλάσης Request_Info εδώ.
  * 
  * @author (Το όνομά σας) 
  * @version (Αριθμός έκδοσης ή ημερομηνία εδώ)
  */
-public class Tag
+public class Request_Info
 {
-    // μεταβλητές στιγμιοτύπου - αντικαταστήστε το ακόλουθο παράδειγμα
-    // με τις δικές σας μεταβλητές
-    String name;
+    String time;
+    int duration;
+    String room;
+    String event;
+     
 
     /**
-     * Κατασευαστής αντικειμένων της κλάσης Tag
+     * Κατασευαστής αντικειμένων της κλάσης Request_Info
      */
-    public Tag()
+    public Request_Info()
     {
         // αρχικοποίηση μεταβλητών στιγμιοτύπου
         
@@ -26,9 +29,11 @@ public class Tag
      * @param  y    παράδειγμα παραμέτρου για την μέθοδο
      * @return        το άθροισμα του x με το y 
      */
-    public String getTagName()
+    public void approve()
     {
-        return this.name;
-        
+        Department_Room room = new Department_Room();
+        room.name=this.room;
+        room.book(this.event);
+
     }
 }

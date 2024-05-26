@@ -1,25 +1,21 @@
-import java.util.*;
 import java.sql.* ;
 import javax.swing.*;
 /**
- * Γράψτε μια περιγραφή της κλάσης User εδώ.
+ * Γράψτε μια περιγραφή της κλάσης Administrator εδώ.
  * 
  * @author (Το όνομά σας) 
  * @version (Αριθμός έκδοσης ή ημερομηνία εδώ)
  */
-public class User
+public class Administrator extends User
 {
     // μεταβλητές στιγμιοτύπου - αντικαταστήστε το ακόλουθο παράδειγμα
     // με τις δικές σας μεταβλητές
     
-    int id;
-    Profile profile;
-    List<String> notifications=new ArrayList<String>();
 
     /**
-     * Κατασευαστής αντικειμένων της κλάσης User
+     * Κατασευαστής αντικειμένων της κλάσης Administrator
      */
-    public User()
+    public Administrator()
     {
         // αρχικοποίηση μεταβλητών στιγμιοτύπου
         
@@ -31,7 +27,7 @@ public class User
      * @param  y    παράδειγμα παραμέτρου για την μέθοδο
      * @return        το άθροισμα του x με το y 
      */
-    public void support(String theme, String text)
+    public void solve(String request)
     {
         try
     {
@@ -55,16 +51,17 @@ public class User
 
        // Execute the query
         
-        PreparedStatement stmt = conn.prepareStatement("insert into support(user,theme,request) values(?,?,?)");
-        stmt.setString(1, this.profile.name);
-        stmt.setString(2, theme);
-        stmt.setString(3, text);
-       
-       
-
+        PreparedStatement stmt = conn.prepareStatement("delete from  support where theme=?");
+        stmt.setString(1, request);
+        
         stmt.executeUpdate();
+        
+        
 
+       // Loop through the result set
        
+
+       // Close the result set, statement and the connection
        
        conn.close() ;
    }
