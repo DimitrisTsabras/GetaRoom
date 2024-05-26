@@ -88,4 +88,68 @@ public class User
    }
         
     }
+    
+    
+    public void join(String text, String group)
+    {
+        try
+    {
+       // Load the database driver
+       Class.forName( "com.mysql.cj.jdbc.Driver" ) ;
+
+       // Get a connection to the database
+       Connection conn = DriverManager.getConnection( "jdbc:mysql://localhost/demo?user=root&password=terrorism" ) ;
+
+       // Print all warnings
+       for( SQLWarning warn = conn.getWarnings(); warn != null; warn = warn.getNextWarning() )
+       {
+          System.out.println( "SQL Warning:" ) ;
+          System.out.println( "State  : " + warn.getSQLState()  ) ;
+          System.out.println( "Message: " + warn.getMessage()   ) ;
+          System.out.println( "Error  : " + warn.getErrorCode() ) ;
+       }
+
+       // Get a statement from the connection
+       boolean open;
+
+       // Execute the query
+        
+        PreparedStatement stmt = conn.prepareStatement("select privacy from groups_table where title=?");
+        stmt.setString(1,group);
+
+        ResultSet result = stmt.executeQuery();
+        result.next();
+        open=result.getBoolean(1);
+        
+        Join_Request request = new Join_Request();
+        request.text=text;
+        request.user=this.profile.name;
+        request.group=group;
+        request.save();
+        if(!open) request.approve();
+        
+       
+       
+       conn.close() ;
+   }
+   catch( SQLException se )
+   {
+       System.out.println( "SQL Exception:" ) ;
+
+       // Loop through the SQL Exceptions
+       while( se != null )
+       {
+          System.out.println( "State  : " + se.getSQLState()  ) ;
+          System.out.println( "Message: " + se.getMessage()   ) ;
+          System.out.println( "Error  : " + se.getErrorCode() ) ;
+
+          se = se.getNextException() ;
+       }
+   }
+   catch( Exception e )
+   {
+      System.out.println( e ) ;
+   }
+        
+    }
 }
