@@ -1,34 +1,21 @@
 import java.sql.* ;
 import javax.swing.*;
-/**
- * Γράψτε μια περιγραφή της κλάσης Event_Suggestion εδώ.
- * 
- * @author (Το όνομά σας) 
- * @version (Αριθμός έκδοσης ή ημερομηνία εδώ)
- */
+
 public class Event_Suggestion extends Event
 {
-    // μεταβλητές στιγμιοτύπου - αντικαταστήστε το ακόλουθο παράδειγμα
-    // με τις δικές σας μεταβλητές
+    
     int expected_people;
     int likes;
     int request;
 
-    /**
-     * Κατασευαστής αντικειμένων της κλάσης Event_Suggestion
-     */
+    
     public Event_Suggestion()
     {
-        // αρχικοποίηση μεταβλητών στιγμιοτύπου
+        
         
     }
 
-    /**
-     * Παράδειγμα μεθόδου - αντικαταστήστε το παρόν σχόλιο με το δικό σας
-     * 
-     * @param  y    παράδειγμα παραμέτρου για την μέθοδο
-     * @return        το άθροισμα του x με το y 
-     */
+    
     public int getLikes()
     {
         return this.likes;
@@ -38,13 +25,13 @@ public class Event_Suggestion extends Event
     public void like(){
         try
     {
-       // Load the database driver
+       
        Class.forName( "com.mysql.cj.jdbc.Driver" ) ;
 
-       // Get a connection to the database
+       
        Connection conn = DriverManager.getConnection( "jdbc:mysql://localhost/demo?user=root&password=terrorism" ) ;
 
-       // Print all warnings
+       
        for( SQLWarning warn = conn.getWarnings(); warn != null; warn = warn.getNextWarning() )
        {
           System.out.println( "SQL Warning:" ) ;
@@ -53,10 +40,7 @@ public class Event_Suggestion extends Event
           System.out.println( "Error  : " + warn.getErrorCode() ) ;
        }
 
-       // Get a statement from the connection
-       ;
-
-       // Execute the query
+       
         int likes;
         PreparedStatement stmt = conn.prepareStatement("select  likes from suggestions where title=?");
         stmt.setString(1, this.title);
@@ -73,10 +57,7 @@ public class Event_Suggestion extends Event
 
         stmt.executeUpdate();
 
-       // Loop through the result set
        
-
-       // Close the result set, statement and the connection
        
        conn.close() ;
    }
@@ -84,7 +65,7 @@ public class Event_Suggestion extends Event
    {
        System.out.println( "SQL Exception:" ) ;
 
-       // Loop through the SQL Exceptions
+       
        while( se != null )
        {
           System.out.println( "State  : " + se.getSQLState()  ) ;
@@ -104,13 +85,13 @@ public class Event_Suggestion extends Event
     public void approve(){
         try
     {
-       // Load the database driver
+       
        Class.forName( "com.mysql.cj.jdbc.Driver" ) ;
 
-       // Get a connection to the database
+       
        Connection conn = DriverManager.getConnection( "jdbc:mysql://localhost/demo?user=root&password=terrorism" ) ;
 
-       // Print all warnings
+       
        for( SQLWarning warn = conn.getWarnings(); warn != null; warn = warn.getNextWarning() )
        {
           System.out.println( "SQL Warning:" ) ;
@@ -120,19 +101,29 @@ public class Event_Suggestion extends Event
        }
         
        Approved_Event  event = new Approved_Event();
+       User user = new User();
+        Profile p = new Profile();
+        user.p=p;
+        
+       
+       PreparedStatement stmt = conn.prepareStatement("select * from suggestions where title=? ");
+       stmt.setString(1, this.title);
+       ResultSet result = stmt.executeQuery();
+       result.next();
        event.title=this.title;
-       event.description=this.description;
-       event.time=this.time;
-       event.duration=this.duration;
-       event.organizer=this.organizer;
-       event.expected_people=this.expected_people;
+       event.description=result.getString(2);
+       event.time=result.getString(3);
+       event.duration=result.getInt(4);
+       p.name=result.getString(5);
+       event.organizer=user;
+       event.expected_people=result.getInt(6);
        
        event.save();
-       PreparedStatement stmt = conn.prepareStatement("delete from suggestions where title=? ");
+        stmt = conn.prepareStatement("delete from suggestions where title=? ");
        stmt.setString(1, this.title);
        stmt.executeUpdate();
 
-       // Loop through the result set
+       
        
        conn.close() ;
    }
@@ -140,7 +131,7 @@ public class Event_Suggestion extends Event
    {
        System.out.println( "SQL Exception:" ) ;
 
-       // Loop through the SQL Exceptions
+       
        while( se != null )
        {
           System.out.println( "State  : " + se.getSQLState()  ) ;
@@ -189,7 +180,7 @@ public class Event_Suggestion extends Event
         stmt.setString(2, this.description);
         stmt.setString(3, this.time);
         stmt.setInt(4, this.duration);
-        stmt.setString(5, this.organizer.profile.name);
+        stmt.setString(5, this.organizer.p.name);
         stmt.setInt(6, this.expected_people);
         stmt.setInt(7, this.likes);
         stmt.setInt(8, this.request);
@@ -222,5 +213,52 @@ public class Event_Suggestion extends Event
       System.out.println( e ) ;
    }
         
+    }
+    
+    public void reject(){
+        try
+    {
+       // Load the database driver
+       Class.forName( "com.mysql.cj.jdbc.Driver" ) ;
+
+       // Get a connection to the database
+       Connection conn = DriverManager.getConnection( "jdbc:mysql://localhost/demo?user=root&password=terrorism" ) ;
+
+       // Print all warnings
+       for( SQLWarning warn = conn.getWarnings(); warn != null; warn = warn.getNextWarning() )
+       {
+          System.out.println( "SQL Warning:" ) ;
+          System.out.println( "State  : " + warn.getSQLState()  ) ;
+          System.out.println( "Message: " + warn.getMessage()   ) ;
+          System.out.println( "Error  : " + warn.getErrorCode() ) ;
+       }
+        
+       
+       PreparedStatement stmt = conn.prepareStatement("delete from suggestions where title=? ");
+       stmt.setString(1, this.title);
+       stmt.executeUpdate();
+
+       // Loop through the result set
+       
+       conn.close() ;
+   }
+   catch( SQLException se )
+   {
+       System.out.println( "SQL Exception:" ) ;
+
+       // Loop through the SQL Exceptions
+       while( se != null )
+       {
+          System.out.println( "State  : " + se.getSQLState()  ) ;
+          System.out.println( "Message: " + se.getMessage()   ) ;
+          System.out.println( "Error  : " + se.getErrorCode() ) ;
+
+          se = se.getNextException() ;
+       }
+   }
+   catch( Exception e )
+   {
+      System.out.println( e ) ;
+   }
     }
 }

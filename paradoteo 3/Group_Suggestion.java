@@ -49,13 +49,23 @@ public class Group_Suggestion
           System.out.println( "Error  : " + warn.getErrorCode() ) ;
        }
         
+        PreparedStatement stmt = conn.prepareStatement("select description from group_suggestions where title=?"); 
+         stmt.setString(1, this.name);
+       ResultSet result =stmt.executeQuery();
+       result.next();
+       this.description=result.getString(1);
+       
+       
+       
        Group  group = new Group();
        group.name=this.name;
        group.description=this.description;
        group.privacy=this.privacy;
        
+       
+       
        group.save();
-       PreparedStatement stmt = conn.prepareStatement("delete from group_suggestions where title=? ");
+        stmt = conn.prepareStatement("delete from group_suggestions where title=? ");
        stmt.setString(1, this.name);
        stmt.executeUpdate();
 
@@ -110,7 +120,9 @@ public class Group_Suggestion
        ;
 
        // Execute the query
-           
+       
+      
+       
        PreparedStatement stmt = conn.prepareStatement("INSERT INTO group_suggestions(title, description,privacy) VALUES (?,?,?)");
         
         stmt.setString(1, this.name);

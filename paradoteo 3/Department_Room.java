@@ -1,35 +1,21 @@
 import java.sql.* ;
 import javax.swing.*;
-/**
- * Γράψτε μια περιγραφή της κλάσης Department_Room εδώ.
- * 
- * @author (Το όνομά σας) 
- * @version (Αριθμός έκδοσης ή ημερομηνία εδώ)
- */
+
 public class Department_Room
 {
-    // μεταβλητές στιγμιοτύπου - αντικαταστήστε το ακόλουθο παράδειγμα
-    // με τις δικές σας μεταβλητές
+    
     String name;
     int capacity;
     String special_info;
 
-    /**
-     * Κατασευαστής αντικειμένων της κλάσης Department_Room
-     */
+    
     public Department_Room()
     {
-        // αρχικοποίηση μεταβλητών στιγμιοτύπου
+        
        
     }
 
-    /**
-     * Παράδειγμα μεθόδου - αντικαταστήστε το παρόν σχόλιο με το δικό σας
-     * 
-     * @param  y    παράδειγμα παραμέτρου για την μέθοδο
-     * @return        το άθροισμα του x με το y 
-     */
-    public void book(String event)
+       public void book(String event)
     {
          try
     {

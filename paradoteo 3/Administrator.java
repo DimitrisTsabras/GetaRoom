@@ -1,33 +1,20 @@
 import java.sql.* ;
 import javax.swing.*;
-/**
- * Γράψτε μια περιγραφή της κλάσης Administrator εδώ.
- * 
- * @author (Το όνομά σας) 
- * @version (Αριθμός έκδοσης ή ημερομηνία εδώ)
- */
+
 public class Administrator extends User
 {
-    // μεταβλητές στιγμιοτύπου - αντικαταστήστε το ακόλουθο παράδειγμα
-    // με τις δικές σας μεταβλητές
+    
     
 
-    /**
-     * Κατασευαστής αντικειμένων της κλάσης Administrator
-     */
+    
     public Administrator()
     {
-        // αρχικοποίηση μεταβλητών στιγμιοτύπου
+        
         
     }
 
-    /**
-     * Παράδειγμα μεθόδου - αντικαταστήστε το παρόν σχόλιο με το δικό σας
-     * 
-     * @param  y    παράδειγμα παραμέτρου για την μέθοδο
-     * @return        το άθροισμα του x με το y 
-     */
-    public void solve(String request)
+    
+    public void solve(String request,String answer)
     {
         try
     {
@@ -47,17 +34,25 @@ public class Administrator extends User
        }
 
        // Get a statement from the connection
-       ;
+       
 
        // Execute the query
+        String user;
+        PreparedStatement stmt = conn.prepareStatement("select user from  support where theme=?");
+        stmt.setString(1,request);
+        ResultSet result = stmt.executeQuery();
+        result.next();
+        user=result.getString(1);
         
-        PreparedStatement stmt = conn.prepareStatement("delete from  support where theme=?");
-        stmt.setString(1, request);
-        
+        stmt = conn.prepareStatement("insert into notification (sender,user,text) values(?,?,?)");
+        stmt.setString(1,this.p.name);
+        stmt.setString(2,user);
+        stmt.setString(3,answer);
         stmt.executeUpdate();
         
-        
-
+        stmt = conn.prepareStatement("delete from support where theme=?");
+        stmt.setString(1,request);
+        stmt.executeUpdate();
        // Loop through the result set
        
 

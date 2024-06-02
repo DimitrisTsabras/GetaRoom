@@ -60,7 +60,7 @@ public class Finished_Event extends Event
         stmt.setString(2, this.description);
         stmt.setString(3, this.time);
         stmt.setInt(4, this.duration);
-        stmt.setString(5, this.organizer.profile.name);
+        stmt.setString(5, this.organizer.p.name);
         stmt.setInt(6, this.participant_number);
         
 

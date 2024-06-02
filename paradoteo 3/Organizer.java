@@ -1,33 +1,20 @@
 import java.sql.* ;
 import javax.swing.*;
-/**
- * Γράψτε μια περιγραφή της κλάσης Organizer εδώ.
- * 
- * @author (Το όνομά σας) 
- * @version (Αριθμός έκδοσης ή ημερομηνία εδώ)
- */
+
 public class Organizer extends User
 {
-    // μεταβλητές στιγμιοτύπου - αντικαταστήστε το ακόλουθο παράδειγμα
-    // με τις δικές σας μεταβλητές
+    
     String pending;
     String current;
 
-    /**
-     * Κατασευαστής αντικειμένων της κλάσης Organizer
-     */
+    
     public Organizer()
     {
-        // αρχικοποίηση μεταβλητών στιγμιοτύπου
+        
         
     }
 
-    /**
-     * Παράδειγμα μεθόδου - αντικαταστήστε το παρόν σχόλιο με το δικό σας
-     * 
-     * @param  y    παράδειγμα παραμέτρου για την μέθοδο
-     * @return        το άθροισμα του x με το y 
-     */
+   
     public void suggestEvent(String title, String description, String time, int duration,int people)
     {
         try
@@ -57,7 +44,7 @@ public class Organizer extends User
         stmt.setString(2, description);
         stmt.setString(3, time);
         stmt.setInt(4, duration);
-        stmt.setString(5, this.profile.name);
+        stmt.setString(5, this.p.name);
         stmt.setInt(6, people);
         stmt.setInt(7, 0);
         stmt.setInt(8, this.id);
